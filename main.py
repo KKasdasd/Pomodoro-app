@@ -5,9 +5,9 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
-SHORT_BREAK_MIN = 5
-LONG_BREAK_MIN = 20
+WORK_MIN = 0.1 #25
+SHORT_BREAK_MIN = 0.1 #5
+LONG_BREAK_MIN = 0.1 #20
 reps = 0
 timer = None
 
@@ -39,7 +39,7 @@ def start_timer():
 def reset_timer():
     start_button.config(state="active")
     window.after_cancel(timer)
-    canvas.itemconfig(timer_text, text="00:00")
+    canvas.itemconfig(timer_text, text="25:00")
     title.config(text="Timer")
     check_mark.config(text="")
     global reps
@@ -76,7 +76,7 @@ title.pack()
 canvas = Canvas(width=200, height=224, highlightthickness=0)
 tomato_img = PhotoImage(file="./images/tomato.png")
 canvas.create_image(100, 112, image=tomato_img,)
-timer_text = canvas.create_text(100, 130, text="00:00", fill="white",
+timer_text = canvas.create_text(100, 130, text="25:00", fill="white",
                                 font=(FONT_NAME, 35, "bold"))
 canvas.config(bg=YELLOW)
 canvas.pack()
@@ -89,5 +89,6 @@ stop_button.pack(side="right")
 
 check_mark = Label(bg=YELLOW, font=(
     FONT_NAME, 20), fg="green", padx=7)
+check_mark.pack()
 
 window.mainloop()
