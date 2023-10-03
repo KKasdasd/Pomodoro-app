@@ -12,15 +12,15 @@ reps = 0
 timer = None
 
 
-#---------------------- TIMER MECHANISM ----------------------  #
+# ---------------------- TIMER MECHANISM ----------------------  #
 def start_timer():
+    start_button.config(state="disabled")
     global reps
     reps += 1
-    
+
     work_sec = WORK_MIN * 60
     short_break_sec = SHORT_BREAK_MIN * 60
     long_break_sec = LONG_BREAK_MIN * 60
-
 
     if reps % 8 == 0:
         count_dow(long_break_sec)
@@ -33,11 +33,20 @@ def start_timer():
         count_dow(work_sec)
         title.config(text="Work", fg="green")
 
+
+# ---------------------- RESET MECHANISM ----------------------  #
+
 def reset_timer():
-    pass
+    start_button.config(state="active")
+    window.after_cancel(timer)
+    canvas.itemconfig(timer_text, text="00:00")
+    title.config(text="Timer")
+    check_mark.config(text="")
+    global reps
+    reps = 0
 
 
-#---------------------- COUNTDOWN MECHANISM ----------------------  #
+# ---------------------- COUNTDOWN MECHANISM ----------------------  #
 def count_dow(count):
     count_min = math.floor(count / 60)
     count_sec = count % 60
@@ -46,15 +55,16 @@ def count_dow(count):
     canvas.itemconfig(timer_text, text=f"{count_min}:{count_sec}")
     if count > 0:
         global timer
-        timer = window.after(1000, count_dow, count -1)
+        timer = window.after(1000, count_dow, count - 1)
     else:
         start_timer()
         mark = ""
         for _ in range(math.floor(reps/2)):
-            mark +="✓"
-        check_mark.config(text=mark)  
+            mark += "✓"
+        check_mark.config(text=mark)
 
-#---------------------- UI SETUP ----------------------  #
+# ---------------------- UI SETUP ----------------------  #
+
 
 window = Tk()
 window.title("Pomodoro")
@@ -67,7 +77,7 @@ canvas = Canvas(width=200, height=224, highlightthickness=0)
 tomato_img = PhotoImage(file="./images/tomato.png")
 canvas.create_image(100, 112, image=tomato_img,)
 timer_text = canvas.create_text(100, 130, text="00:00", fill="white",
-                   font=(FONT_NAME, 35, "bold"))
+                                font=(FONT_NAME, 35, "bold"))
 canvas.config(bg=YELLOW)
 canvas.pack()
 
