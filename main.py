@@ -1,5 +1,6 @@
-from tkinter import Tk, Label, Canvas, PhotoImage, Button
+from tkinter import Tk, Label, Canvas, PhotoImage, Button, messagebox
 import math
+import pygame
 PINK = "#e2979c"
 RED = "#e7305b"
 GREEN = "#9bdeac"
@@ -11,6 +12,11 @@ LONG_BREAK_MIN = 20
 reps = 0
 timer = None
 
+pygame.mixer.init()
+
+def play_alarm():
+    pygame.mixer.music.load("./audio/alarm.wav")
+    pygame.mixer.music.play()
 
 # ---------------------- TIMER MECHANISM ----------------------  #
 def start_timer():
@@ -25,14 +31,18 @@ def start_timer():
     if reps % 8 == 0:
         count_dow(long_break_sec)
         title.config(text="Long Break", fg="red")
+        messagebox.showinfo(message="Long Break")
+        play_alarm()
     elif reps % 2 == 0:
         count_dow(short_break_sec)
         title.config(text="Short Break", fg="pink")
-
+        messagebox.showinfo(message="Short Break")
+        play_alarm()
     else:
         count_dow(work_sec)
         title.config(text="Work", fg="green")
-
+        messagebox.showinfo(message="Work")
+        play_alarm()
 
 # ---------------------- RESET MECHANISM ----------------------  #
 
