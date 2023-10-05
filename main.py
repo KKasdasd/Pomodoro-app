@@ -11,7 +11,7 @@ SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
 timer = None
-
+alarm_flag = False
 pygame.mixer.init()
 
 def play_alarm():
@@ -39,11 +39,13 @@ def start_timer():
         messagebox.showinfo(message="Short Break")
         play_alarm()
     else:
+        global alarm_flag
         count_dow(work_sec)
         title.config(text="Work", fg="green")
         messagebox.showinfo(message="Work")
-        play_alarm()
-
+        if alarm_flag:
+            play_alarm()
+        alarm_flag = True
 # ---------------------- RESET MECHANISM ----------------------  #
 
 def reset_timer():
