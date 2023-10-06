@@ -18,6 +18,10 @@ def play_alarm():
     pygame.mixer.music.load("./audio/alarm.wav")
     pygame.mixer.music.play()
 
+def set_app_on_top():
+    window.attributes("-topmost", 1)
+    window.deiconify()
+
 # ---------------------- TIMER MECHANISM ----------------------  #
 def start_timer():
     start_button.config(state="disabled")
@@ -29,21 +33,21 @@ def start_timer():
     long_break_sec = LONG_BREAK_MIN * 60
 
     if reps % 8 == 0:
+        set_app_on_top()
         play_alarm()
         count_dow(long_break_sec)
         title.config(text="Long Break", fg="red")
-        messagebox.showinfo(message="Long Break")
     elif reps % 2 == 0:
+        set_app_on_top()
         play_alarm()
         count_dow(short_break_sec)
         title.config(text="Short Break", fg="pink")
-        messagebox.showinfo(message="Short Break")
     else:
         global start_app_flag
         count_dow(work_sec)
         title.config(text="Work", fg="green")
         if start_app_flag:
-            messagebox.showinfo(message="Work")
+            set_app_on_top()
             play_alarm()
         start_app_flag = True
 # ---------------------- RESET MECHANISM ----------------------  #
