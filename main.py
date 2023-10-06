@@ -54,7 +54,8 @@ def reset_timer():
     canvas.itemconfig(timer_text, text="25:00")
     title.config(text="Timer")
     check_mark.config(text="")
-    global reps
+    global reps, start_app_flag
+    start_app_flag = False
     reps = 0
 
 
